@@ -12,21 +12,29 @@
 --2--fare un timing di trenta secondi che elimini l'output dei numeri generati in 1 e mi faccia fare 6 prompt dove inserire i numeri che ci ricordiamo.
 --3-- se i numeri che ci ricordiamo corrispondono ai numeri estratti all'inizio restituirli in pagina.
 */
-
-const numToRemember = generateNumToRemember(6);
-
 const numsToUse = 6;
-const toHinner = document.querySelector(".to-hinner");
+const numToRemember = generateNumToRemember(numsToUse);
 
-init(numToRemember);
+
+const toHinner = document.querySelector(".to-hinner h1");
+const toHinnerToH = document.querySelector(".to-hinner h3");
+let awnser = [];
+
+init(numsToUse ,numToRemember);
 
 // funzione che genera un array composto da (numsToUse) composto da numeri casuali.
 function generateNumToRemember(numsQuantity){
   const numbersOut = [];
 
   for (let i = 0; i < numsQuantity; i++){
-    numbersOut[i]= randomNumberGen(99, 1);
+    let numToControl = randomNumberGen(99, 1);
+    if (!numbersOut.includes(numToControl)){
+    numbersOut[i]= numToControl;
     console.log(numbersOut);
+    }else{
+      
+      i--;
+    }
   }
 
   return numbersOut;
@@ -36,19 +44,38 @@ function randomNumberGen(max, min){
   return Math.floor(Math.random() *(max - min)) + min;
 };
 
-function init(arryOfnumbers){
+function printArray(numbersIn, numArray) {
+  for(let i = 0; i < numbersIn; i++){
+    toHinner.innerHTML += `
+    ${numArray[i]}
+    `
+  }
+}
+
+function init(numsToUse, arryOfnumbers){
   
-  toHinner.innerHTML = `
-  <div class="container-num d-flex text-center justify-content-center align-items-center flex-column"><h3>Ricordati questi numeri</h3>
-    <h1>${arryOfnumbers[0]},${arryOfnumbers[1]},${arryOfnumbers[2]},${arryOfnumbers[3]},${arryOfnumbers[4]},${arryOfnumbers[5]}</h1>
-    </div>
-  `;
+  printArray(numsToUse, arryOfnumbers);
  
   setTimeout(function(){
+    
+    let counter = 0;
+    let numbersGet = [];
+    for(let i = 0; i < numsToUse; i++){
+      awnser.push(parseInt(prompt("inserisci i numeri che ricordi")));
+      if (arryOfnumbers.includes(awnser[i])){
+        numbersGet.push(awnser[i]);
+        counter++;
+        // toHinner.innerHTML += `50
 
+        // ${awnser[i]}
+        // `;
+        console.log(awnser[i]);
+      }
+    };
+    
+    toHinnerToH.innerHTML = `<h3>hai indovinato ${counter} numeri </h3>`
     toHinner.innerHTML = "";
-
-    for(let i = 0; i < numsToUse; i++);
+    printArray(counter, numbersGet);
 
   }, 5000); 
 }
