@@ -50,5 +50,5 @@ function init(arryOfnumbers){
 
     for(let i = 0; i < numsToUse; i++);
 
-  }, 5000);
+  }, 5000); 
 }
